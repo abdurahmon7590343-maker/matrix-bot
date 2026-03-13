@@ -1,11 +1,18 @@
 import numpy as np
-from keep_alive import keep_alive
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ContextTypes
-keep_alive()
-import os
+from keep_alive import keep_alive
 
-TOKEN = os.getenv("TOKEN")
+# 1. Eng birinchi bo'lib tokenni tekshiramiz
+TOKEN = os.environ.get("TOKEN")
+
+if not TOKEN:
+    print("XATO: TOKEN topilmadi! Render Environment sozlamalarini tekshiring.")
+else:
+    print("Token muvaffaqiyatli yuklandi.")
+
+# 2. Botingizni tirik saqlash funksiyasi
+keep_alive()
 
 MAX_SIZE = 6
 
@@ -306,4 +313,3 @@ app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
 
 print("Bot ishga tushdi...")
 app.run_polling()
-
