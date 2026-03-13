@@ -13,7 +13,7 @@ else:
     print("Token muvaffaqiyatli yuklandi.")
 
 # 2. Botingizni tirik saqlash funksiyasi
-keep_alive()
+
 
 MAX_SIZE = 6
 
@@ -307,11 +307,27 @@ async def text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("Son kiriting.")
 
 # ================= ISHGA TUSHURISH =================
-app = ApplicationBuilder().token(TOKEN).build()
-app.add_handler(CommandHandler("start", start))
-app.add_handler(CallbackQueryHandler(button_handler))
-app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
+# ... avvalgi funksiyalaringiz ...
 
-print("Bot ishga tushdi...")
-app.run_polling()
+if __name__ == "__main__":
+    # 1. Avval "Tirik saqlash" serverini yoqamiz
+    keep_alive() 
+    print("Veb-server ishga tushdi...")
+
+    # 2. Keyin botni quramiz
+    if TOKEN:
+        app = ApplicationBuilder().token(TOKEN).build()
+        
+        app.add_handler(CommandHandler("start", start))
+        app.add_handler(CallbackQueryHandler(button_handler))
+        app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
+        
+        print("Bot xabarlarni kutmoqda (Polling)...")
+        
+        # 3. VA ENG OXIRIDA POLLING!
+        # Bu qator eng oxirida bo'lishi shart, bo'lmasa kod shu yerda qotib qoladi
+        app.run_polling()
+    else:
+        print("Xato: Token topilmadi!")
+
 
