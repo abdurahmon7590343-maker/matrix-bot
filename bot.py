@@ -3,7 +3,7 @@ from keep_alive import keep_alive
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ContextTypes
 keep_alive()
-TOKEN = import os
+import os
 
 TOKEN = os.getenv("TOKEN")
 
@@ -306,3 +306,4 @@ app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
 
 print("Bot ishga tushdi...")
 app.run_polling()
+
